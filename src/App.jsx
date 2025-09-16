@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import CoinCard from "./components/CoinCard";
 const API_URL =
   "https://api.coingecko.com/api/v3/coins/markets?vs_currency=pln&per_page=10&sparkline=false&order=market_cap_desc";
 const options = {
@@ -16,6 +17,9 @@ export default function App() {
     async function getCoins() {
       try {
         const response = await fetch(API_URL, options);
+        if (!response.ok) {
+          throw new Error("Error fetching coins data!");
+        }
         const data = await response.json();
         setCoins(data);
       } catch (error) {
@@ -27,13 +31,26 @@ export default function App() {
 
     getCoins();
   }, []);
-  if (loading) return <h1>Loading....</h1>;
-  if (error) return <h1>{error}</h1>;
+
   return (
-    <div>
-      <h1>🚀 Crypto Dash</h1>
-      {coins.length > 0 &&
-        coins.map((coin) => <h2 key={coin.id}>{coin.name}</h2>)}
-    </div>
+    <>
+      {loading ? (
+        <h1>Fetching coins data...</h1>
+      ) : error ? (
+        <div className="error">{error}</div>
+      ) : (
+        <>
+          <h1>🚀 Crypto Dash</h1>
+          <main className="grid">
+            {coins.map((coin) => (
+              <CoinCard
+                key={coin.id}
+                coin={coin}
+              />
+            ))}
+          </main>
+        </>
+      )}
+    </>
   );
 }

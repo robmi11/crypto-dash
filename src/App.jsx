@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import CoinCard from "./components/CoinCard";
-const API_URL =
-  "https://api.coingecko.com/api/v3/coins/markets?vs_currency=pln&per_page=10&sparkline=false&order=market_cap_desc";
+import DisplayLimiter from "./components/DisplayLimiter";
 const options = {
   method: "GET",
   headers: { "x-cg-demo-api-key": "CG-kKkDjRJ2gmbcjA5YEnHnB6bv" },
@@ -12,11 +11,17 @@ export default function App() {
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setErrot] = useState(null);
+  const [limit, setLimit] = useState(10);
 
   useEffect(() => {
     async function getCoins() {
       try {
-        const response = await fetch(API_URL, options);
+        const response = await fetch(
+          `${
+            import.meta.env.VITE_API_URL
+          }&per_page=${limit}&sparkline=false&order=market_cap_desc`,
+          options
+        );
         if (!response.ok) {
           throw new Error("Error fetching coins data!");
         }
@@ -30,7 +35,7 @@ export default function App() {
     }
 
     getCoins();
-  }, []);
+  }, [limit]);
 
   return (
     <>
@@ -41,6 +46,10 @@ export default function App() {
       ) : (
         <>
           <h1>🚀 Crypto Dash</h1>
+          <DisplayLimiter
+            limit={limit}
+            changeLimit={setLimit}
+          />
           <main className="grid">
             {coins.map((coin) => (
               <CoinCard

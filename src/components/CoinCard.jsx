@@ -15,10 +15,10 @@ export default function CoinCard({ coin }) {
         </div>
       </div>
       <p>
-        Price:{" "}
-        {new Intl.NumberFormat("en-US", {
+        Cena:{" "}
+        {new Intl.NumberFormat("pl-PL", {
           style: "currency",
-          currency: "USD",
+          currency: "PLN",
         }).format(coin.current_price)}
       </p>
       <p
@@ -28,9 +28,9 @@ export default function CoinCard({ coin }) {
         {coin.price_change_percentage_24h.toFixed(2)} %
       </p>
       <p>
-        {new Intl.NumberFormat("en-US", {
+        {new Intl.NumberFormat("pl-PL", {
           style: "currency",
-          currency: "USD",
+          currency: "PLN",
         }).format(coin.market_cap)}
       </p>
     </div>

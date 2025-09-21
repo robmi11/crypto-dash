@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import CoinCard from "./components/CoinCard";
 import DisplayLimiter from "./components/DisplayLimiter";
+import FilterInput from "./components/FilterInput";
 const options = {
   method: "GET",
   headers: { "x-cg-demo-api-key": "CG-kKkDjRJ2gmbcjA5YEnHnB6bv" },
@@ -12,6 +13,7 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [error, setErrot] = useState(null);
   const [limit, setLimit] = useState(10);
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     async function getCoins() {
@@ -37,6 +39,13 @@ export default function App() {
     getCoins();
   }, [limit]);
 
+  const filteredCoins = coins.filter((coin) => {
+    return (
+      coin.name.toLowerCase().includes(filter.toLowerCase()) ||
+      coin.symbol.toLowerCase().includes(filter.toLowerCase())
+    );
+  });
+
   return (
     <>
       {loading ? (
@@ -46,17 +55,29 @@ export default function App() {
       ) : (
         <>
           <h1>🚀 Crypto Dash</h1>
-          <DisplayLimiter
-            limit={limit}
-            changeLimit={setLimit}
-          />
+          <div className="top-controls">
+            <FilterInput
+              filter={filter}
+              onFilterChange={setFilter}
+            />
+            <DisplayLimiter
+              limit={limit}
+              changeLimit={setLimit}
+            />
+          </div>
           <main className="grid">
-            {coins.map((coin) => (
-              <CoinCard
-                key={coin.id}
-                coin={coin}
-              />
-            ))}
+            {filteredCoins.length > 0 ? (
+              filteredCoins.map((coin) => (
+                <CoinCard
+                  key={coin.id}
+                  coin={coin}
+                />
+              ))
+            ) : (
+              <p>
+                Nie znaleziono krypowaluty zgodnej z parametrami wyszukiwania.
+              </p>
+            )}
           </main>
         </>
       )}

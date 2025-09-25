@@ -5,7 +5,7 @@ export default function FilterInput({ filter, onFilterChange }) {
         type="text"
         value={filter}
         onChange={(event) => onFilterChange(event.target.value)}
-        placeholder="Filter coins by name or symbol"
+        placeholder="Filtruj waluty przez nazwę lub symbol"
       />
     </div>
   );

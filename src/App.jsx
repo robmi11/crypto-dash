@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import CoinCard from "./components/CoinCard";
 import DisplayLimiter from "./components/DisplayLimiter";
 import FilterInput from "./components/FilterInput";
+import SortSelector from "./components/SortSelector";
 const options = {
   method: "GET",
   headers: { "x-cg-demo-api-key": "CG-kKkDjRJ2gmbcjA5YEnHnB6bv" },
@@ -14,6 +15,7 @@ export default function App() {
   const [error, setErrot] = useState(null);
   const [limit, setLimit] = useState(10);
   const [filter, setFilter] = useState("");
+  const [sortBy, setSortBy] = useState("market_cap_desc");
 
   useEffect(() => {
     async function getCoins() {
@@ -39,12 +41,38 @@ export default function App() {
     getCoins();
   }, [limit]);
 
-  const filteredCoins = coins.filter((coin) => {
-    return (
-      coin.name.toLowerCase().includes(filter.toLowerCase()) ||
-      coin.symbol.toLowerCase().includes(filter.toLowerCase())
-    );
-  });
+  const filteredCoins = coins
+    .filter((coin) => {
+      return (
+        coin.name.toLowerCase().includes(filter.toLowerCase()) ||
+        coin.symbol.toLowerCase().includes(filter.toLowerCase())
+      );
+    })
+    .slice()
+    .sort((a, b) => {
+      switch (sortBy) {
+        case "market_cap_desc":
+          return b.market_cap - a.market_cap;
+        case "market_cap_asc":
+          return a.market_cap - b.market_cap;
+        case "price_desc":
+          return b.current_price - a.current_price;
+        case "price_asc":
+          return a.current_price - b.current_price;
+        case "change_desc":
+          return (
+            b.market_cap_change_percentage_24h -
+            a.market_cap_change_percentage_24h
+          );
+        case "change_asc":
+          return (
+            a.market_cap_change_percentage_24h -
+            b.market_cap_change_percentage_24h
+          );
+        default:
+          break;
+      }
+    });
 
   return (
     <>
@@ -63,6 +91,10 @@ export default function App() {
             <DisplayLimiter
               limit={limit}
               changeLimit={setLimit}
+            />
+            <SortSelector
+              sortBy={sortBy}
+              onSortChange={setSortBy}
             />
           </div>
           <main className="grid">

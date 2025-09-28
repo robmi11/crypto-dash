@@ -1,10 +1,14 @@
-export default function FilterInput({ filter, onFilterChange }) {
+import { useContext } from "react";
+import { CoinsContext } from "../context/CoinsContext";
+
+export default function FilterInput() {
+  const { filter, setFilter } = useContext(CoinsContext);
   return (
     <div className="filter">
       <input
         type="text"
         value={filter}
-        onChange={(event) => onFilterChange(event.target.value)}
+        onChange={(event) => setFilter(event.target.value)}
         placeholder="Filtruj waluty przez nazwę lub symbol"
       />
     </div>

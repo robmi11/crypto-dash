@@ -1,9 +1,14 @@
-export default function DisplayLimiter({ changeLimit, limit }) {
+import { useContext } from "react";
+import { CoinsContext } from "../context/CoinsContext";
+
+export default function DisplayLimiter() {
+  const { limit, setLimit } = useContext(CoinsContext);
+
   return (
     <div className="controls">
       <label htmlFor="show">Pokaż:</label>
       <select
-        onChange={(event) => changeLimit(+event.target.value)}
+        onChange={(event) => setLimit(+event.target.value)}
         value={limit}
         id="show">
         <option value="5">5</option>

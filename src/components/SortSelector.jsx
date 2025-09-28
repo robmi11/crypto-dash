@@ -1,10 +1,15 @@
-export default function SortSelector({ sortBy, onSortChange }) {
+import { useContext } from "react";
+import { CoinsContext } from "../context/CoinsContext";
+
+export default function SortSelector() {
+  const { sortBy, setSortBy } = useContext(CoinsContext);
+
   return (
     <div className="controls">
       <label htmlFor="sort">Sortuj:</label>
       <select
         value={sortBy}
-        onChange={(event) => onSortChange(event.target.value)}
+        onChange={(event) => setSortBy(event.target.value)}
         id="sort">
         <option value="market_cap_desc">Kapitalizacja (Malejąco)</option>
         <option value="market_cap_asc">Kapitalizacja (Rosnąco)</option>

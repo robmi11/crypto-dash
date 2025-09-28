@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router";
 import AboutPage from "./pages/about";
+import CoinDetailsPage from "./pages/coin-details";
 import HomePage from "./pages/home";
 import Header from "./components/Header";
 import NotFoundPage from "./pages/not-found";
@@ -14,8 +15,12 @@ export default function App() {
           element={<HomePage />}
         />
         <Route
-          path="about"
+          path="/about"
           element={<AboutPage />}
+        />
+        <Route
+          path="/coin/:id"
+          element={<CoinDetailsPage />}
         />
         <Route
           path="*"

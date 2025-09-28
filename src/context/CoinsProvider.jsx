@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 import { CoinsContext } from "./CoinsContext";
-
-const options = {
-  method: "GET",
-  headers: { "x-cg-demo-api-key": "CG-kKkDjRJ2gmbcjA5YEnHnB6bv" },
-  body: undefined,
-};
+import { options } from "../utils/opt";
 
 export default function CoinsProvider({ children }) {
   const [coins, setCoins] = useState([]);

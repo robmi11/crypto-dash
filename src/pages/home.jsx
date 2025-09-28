@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { Link } from "react-router";
 import { CoinsContext } from "../context/CoinsContext";
 import CoinCard from "../components/CoinCard";
 import DisplayLimiter from "../components/DisplayLimiter";
@@ -25,10 +26,11 @@ export default function HomePage() {
           <main className="grid">
             {filteredCoins.length > 0 ? (
               filteredCoins.map((coin) => (
-                <CoinCard
+                <Link
                   key={coin.id}
-                  coin={coin}
-                />
+                  to={`/coin/${coin.id}`}>
+                  <CoinCard coin={coin} />
+                </Link>
               ))
             ) : (
               <p>

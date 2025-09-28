@@ -31,7 +31,7 @@ const CoinChart = ({ coinId }) => {
   useEffect(() => {
     const fetchPrices = async () => {
       const res = await fetch(
-        `${API_URL}/${coinId}/market_chart?vs_currency=usd&days=7`
+        `${API_URL}/${coinId}/market_chart?vs_currency=pln&days=7`
       );
 
       const data = await res.json();
@@ -44,7 +44,7 @@ const CoinChart = ({ coinId }) => {
       setChartData({
         datasets: [
           {
-            label: "Price (USD)",
+            label: "Price (PLN)",
             data: prices,
             fill: true,
             borderColor: "#007bff",

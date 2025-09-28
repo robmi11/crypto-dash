@@ -3,7 +3,8 @@ import { Link, useParams } from "react-router";
 import Spinner from "../components/Spinner";
 import CoinChart from "../components/CoinChart";
 import { options } from "../utils/opt";
-import { plnDisplay } from "../utils/utils";
+import { currencyDisplay } from "../utils/utils";
+const COIN_URL = import.meta.env.VITE_COIN_API_URL;
 
 export default function CoinDetailsPage() {
   const [coin, setCoin] = useState(null);
@@ -14,10 +15,7 @@ export default function CoinDetailsPage() {
   useEffect(() => {
     const fetchCoin = async () => {
       try {
-        const res = await fetch(
-          `https://api.coingecko.com/api/v3/coins/${id}`,
-          options
-        );
+        const res = await fetch(`${COIN_URL}/${id}`, options);
         if (!res.ok) throw new Error("Failed to fetch data");
         const data = await res.json();
         setCoin(data);
@@ -56,13 +54,13 @@ export default function CoinDetailsPage() {
           <div className="coin-details-info">
             <h3>Rank: #{coin.market_cap_rank}</h3>
             <h3>
-              Current Price: {plnDisplay(coin.market_data.current_price.pln)}
+              Current Price: {currencyDisplay(coin.market_data.current_price.usd)}
             </h3>
-            <h4>Market Cap: {plnDisplay(coin.market_data.market_cap.pln)}</h4>
-            <h4>24h High: {plnDisplay(coin.market_data.high_24h.pln)}</h4>
-            <h4>24h Low: {plnDisplay(coin.market_data.low_24h.pln)}</h4>
+            <h4>Market Cap: {currencyDisplay(coin.market_data.market_cap.usd)}</h4>
+            <h4>24h High: {currencyDisplay(coin.market_data.high_24h.usd)}</h4>
+            <h4>24h Low: {currencyDisplay(coin.market_data.low_24h.usd)}</h4>
             <h4>
-              24h Price Change: {plnDisplay(coin.market_data.price_change_24h)}{" "}
+              24h Price Change: {currencyDisplay(coin.market_data.price_change_24h)}{" "}
               ({coin.market_data.price_change_percentage_24h.toFixed(2)}%)
             </h4>
             <h4>
@@ -74,11 +72,11 @@ export default function CoinDetailsPage() {
               {coin.market_data.total_supply?.toLocaleString() || "N/A"}
             </h4>
             <h4>
-              All-Time High: {plnDisplay(coin.market_data.ath.pln)} on{" "}
+              All-Time High: {currencyDisplay(coin.market_data.ath.pln)} on{" "}
               {new Date(coin.market_data.ath_date.pln).toLocaleDateString()}
             </h4>
             <h4>
-              All-Time Low: {plnDisplay(coin.market_data.atl.pln)} on{" "}
+              All-Time Low: {currencyDisplay(coin.market_data.atl.pln)} on{" "}
               {new Date(coin.market_data.atl_date.usd).toLocaleDateString()}
             </h4>
             <h4>

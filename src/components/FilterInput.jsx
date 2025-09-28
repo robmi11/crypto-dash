@@ -9,7 +9,7 @@ export default function FilterInput() {
         type="text"
         value={filter}
         onChange={(event) => setFilter(event.target.value)}
-        placeholder="Filtruj waluty przez nazwę lub symbol"
+        placeholder="Filter coins by name or symbol"
       />
     </div>
   );

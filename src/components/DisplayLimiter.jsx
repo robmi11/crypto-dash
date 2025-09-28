@@ -6,7 +6,7 @@ export default function DisplayLimiter() {
 
   return (
     <div className="controls">
-      <label htmlFor="show">Pokaż:</label>
+      <label htmlFor="show">Show:</label>
       <select
         onChange={(event) => setLimit(+event.target.value)}
         value={limit}

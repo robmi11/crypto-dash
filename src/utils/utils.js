@@ -1,4 +1,4 @@
-export const plnDisplay = (pln) =>
-  new Intl.NumberFormat("pl-PL", { style: "currency", currency: "pln" }).format(
-    pln
+export const currencyDisplay = (value) =>
+  new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(
+    value
   );

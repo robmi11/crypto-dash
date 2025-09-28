@@ -1,3 +1,5 @@
+import { currencyDisplay } from "../utils/utils.js";
+
 export default function CoinCard({ coin }) {
   return (
     <div
@@ -14,25 +16,14 @@ export default function CoinCard({ coin }) {
           <p className="symbol">{coin.symbol.toUpperCase()}</p>
         </div>
       </div>
-      <p>
-        Cena:{" "}
-        {new Intl.NumberFormat("pl-PL", {
-          style: "currency",
-          currency: "PLN",
-        }).format(coin.current_price)}
-      </p>
+      <p>Price: {currencyDisplay(coin.current_price)}</p>
       <p
         className={
           coin.price_change_percentage_24h >= 0 ? "positive" : "negative"
         }>
         {coin.price_change_percentage_24h.toFixed(2)} %
       </p>
-      <p>
-        {new Intl.NumberFormat("pl-PL", {
-          style: "currency",
-          currency: "PLN",
-        }).format(coin.market_cap)}
-      </p>
+      <p>{currencyDisplay(coin.market_cap)}</p>
     </div>
   );
 }

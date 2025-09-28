@@ -5,6 +5,7 @@ import CoinCard from "../components/CoinCard";
 import DisplayLimiter from "../components/DisplayLimiter";
 import FilterInput from "../components/FilterInput";
 import SortSelector from "../components/SortSelector";
+import Spinner from "../components/Spinner";
 
 export default function HomePage() {
   const { filteredCoins, error, loading } = useContext(CoinsContext);
@@ -12,7 +13,7 @@ export default function HomePage() {
   return (
     <>
       {loading ? (
-        <h1>Fetching coins data...</h1>
+        <Spinner color="white" />
       ) : error ? (
         <div className="error">{error}</div>
       ) : (

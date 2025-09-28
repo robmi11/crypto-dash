@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Spinner from "../components/Spinner";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -61,7 +62,7 @@ const CoinChart = ({ coinId }) => {
     fetchPrices();
   }, [coinId]);
 
-  if (loading) return <p>Loading Chart...</p>;
+  if (loading) return <Spinner />;
 
   return (
     <div style={{ marginTop: "30px" }}>
